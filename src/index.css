@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Pixelify+Sans:wght@400..700&display=swap');
+
+:root {
+  --font-pr: 'Pixelify Sans', system-ui, -apple-system, sans-serif;
+  --font-se: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #000000;
+  color: #ddd;
+  font-family: var(--font-pr);
+}
