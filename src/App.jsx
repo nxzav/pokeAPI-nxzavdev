@@ -1,55 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, createContext } from 'react';
+import Sidebar from './components/Sidebar';
+import Pokemons from './components/Pokemons';
 import './App.css';
 
-const API_URL = 'https://pokeapi.co/api/v2/pokemon-form/';
+const AnimationContext = createContext();
 
 function App() {
-  const [pokemons, setPokemons] = useState([]);
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [animate, setAnimate] = useState(false);
 
-  useEffect(() => {
-    const getPokemons = async () => {
-      const response = await fetch(`${API_URL}?offset=0&limit=63`);
-      const data = await response.json();
-      const fetchPromises = data.results.map((result) => {
-        console.log('fetching');
-        return fetch(result.url)
-          .then((res) => res.json())
-          .then((data) => data);
-      });
-      try {
-        const pokeImages = await Promise.all(fetchPromises);
-        setPokemons(pokeImages);
-      } catch (error) {
-        console.error('Error fetching pokemon images: ', error);
-      }
-    };
-    getPokemons();
-  }, []);
+  const toggleAnimate = () => {
+    setAnimate((prev) => !prev);
+  };
+
+  const handlePrevPage = () => {
+    setPage((prev) => prev - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage((prev) => prev + 1);
+  };
 
   return (
-    <>
+    <AnimationContext.Provider value={{ animate, toggleAnimate }}>
+      <Sidebar />
       <div className="nav-buttons">
         <nav>
-          <div className="prev"></div>
-          <div className="next"></div>
+          {page >= 25 ? (
+            ''
+          ) : (
+            <div tabIndex="1" className="next" onClick={handleNextPage}></div>
+          )}
+          {page <= -24 ? (
+            ''
+          ) : (
+            <div tabIndex="0" className="prev" onClick={handlePrevPage}></div>
+          )}
         </nav>
       </div>
       <header>
-        <h1>PokeAPI Paginator</h1>
+        <div className="header">
+          <h1>PokeAPI Paginator</h1>
+        </div>
       </header>
       <main>
-        <div className="container grid">
-          {pokemons.map((pokemon) => (
-            <div key={pokemon.id} className="card">
-              <img src={pokemon.sprites.front_default} alt={pokemon.name} />
-              <p className="poke-name">{pokemon.name}</p>
-            </div>
-          ))}
-        </div>
+        <Pokemons page={page} />
       </main>
-    </>
+    </AnimationContext.Provider>
   );
 }
 
+export { AnimationContext };
 export default App;

@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Pixelify+Sans:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 :root {
-  --font-pr: 'Pixelify Sans', system-ui, -apple-system, sans-serif;
+  --font-pr: 'Press Start 2P', system-ui, -apple-system, sans-serif;
   --font-se: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -16,4 +17,79 @@ body {
   background: #000000;
   color: #ddd;
   font-family: var(--font-pr);
+}
+
+aside {
+  padding: 1rem;
+  width: 100%;
+  height: 100lvh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  translate: 100%;
+  background: #dddddd;
+  color: #222;
+  z-index: 5;
+  transition: translate 0.2s;
+}
+
+aside.active {
+  translate: 0;
+}
+
+aside ul {
+  padding-top: 3rem;
+  padding-left: 0;
+}
+
+aside li {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1rem;
+  list-style: none;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 0 4px #000000;
+  user-select: none;
+}
+
+aside li.active {
+  background: #000000;
+  color: #dddddd;
+}
+
+aside li:hover {
+  cursor: pointer;
+  box-shadow: 0 0 0 6px #000000;
+}
+
+.mute {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.menu-btn {
+  padding: 4px;
+  position: fixed;
+  cursor: pointer;
+  top: 0;
+  right: 10px;
+  font-size: 2.5rem;
+  user-select: none;
+  z-index: 10;
+  color: #dddddd;
+}
+
+.menu-btn.active {
+  color: #000000;
+}
+
+@media screen and (min-width: 480px) {
+  aside {
+    width: 360px;
+    z-index: 5;
+    height: 100lvh;
+    transition: translate 0.5s;
+  }
 }
